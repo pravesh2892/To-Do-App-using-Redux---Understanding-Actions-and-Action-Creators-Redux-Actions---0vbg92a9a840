@@ -3,13 +3,29 @@ import { useDispatch } from 'react-redux';
 import { addTodo } from '../redux/actions';
 
 const TodoForm = () => {
-  //Write a code here as needed
+  const dispatch = useDispatch();
+  const [taskText, setTaskText] = useState('');
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (taskText.trim() !== '') {
+      dispatch(addTodo(taskText));
+      setTaskText('');
+    }
+  };
+
   return (
-    <form>
-      <input type='text' placeholder='Add a task...' />
+    <form onSubmit={handleSubmit}>
+      <input
+        type='text'
+        placeholder='Add a task...'
+        value={taskText}
+        onChange={(e) => setTaskText(e.target.value)}
+      />
       <button type='submit'>Add</button>
     </form>
   );
 };
 
 export default TodoForm;
+
